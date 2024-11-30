@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package hello;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "pkg/grpc";
+
+service HelloService {
+  rpc GetHello(google.protobuf.Empty) returns (GetHelloResponse);
+}
+
+message GetHelloResponse {
+  string message = 1;
+}
