@@ -11,6 +11,7 @@ import (
 	hellopb "protobuf_document/pkg/grpc"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -32,6 +33,8 @@ func main() {
 	s := grpc.NewServer()
 
 	hellopb.RegisterHelloServiceServer(s, NewMyServer())
+
+	reflection.Register(s)
 
 	go func() {
 		log.Printf("start gRPC server port: %v", port)
