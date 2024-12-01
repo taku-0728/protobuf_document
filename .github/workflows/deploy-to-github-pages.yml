@@ -22,6 +22,11 @@ jobs:
         run: |
           buf generate --template buf.gen.doc.yaml
 
+      - name: Swagger2.0 to OpenAPI3.0
+        run: |
+          npm install -g swagger2openapi
+          swagger2openapi --outfile openapi.json swagger.json
+
       - name: Checkout swagger-ui
         uses: actions/checkout@v3
         with:
@@ -36,7 +41,7 @@ jobs:
         uses: Legion2/swagger-ui-action@v1
         with:
           output: swagger-ui
-          spec-file: docs/api/v1/hello.swagger.json
+          spec-file: docs/openapi.json
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
 
