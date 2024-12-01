@@ -22,9 +22,15 @@ jobs:
         run: |
           buf generate --template buf.gen.doc.yaml
 
-      - name: Install swagger-cli
-        run: |
-          npm install -g swagger-cli@3.0.0
+      - name: Checkout swagger-ui
+        uses: actions/checkout@v3
+        with:
+          repository: swagger-api/swagger-ui
+          ref: 'v5.18.2'
+          path: swagger-ui
+
+      - name: Inject Swagger static files
+        run: cp -n swagger-ui/dist/* docs
 
       - name: Generate Swagger UI
         uses: Legion2/swagger-ui-action@v1
