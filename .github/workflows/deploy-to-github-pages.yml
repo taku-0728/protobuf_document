@@ -23,7 +23,7 @@ jobs:
           buf generate --template buf.gen.doc.yaml
 
       - name: Install swagger-cli
-        run: npm install -g swagger-cli
+        run: npm install -g swagger-cli@3.0.0
 
       - name: Generate Swagger UI
         uses: Legion2/swagger-ui-action@v1
