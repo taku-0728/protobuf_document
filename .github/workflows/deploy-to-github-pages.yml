@@ -25,7 +25,7 @@ jobs:
       - name: Swagger2.0 to OpenAPI3.0
         run: |
           npm install -g swagger2openapi
-          swagger2openapi --outfile openapi.json swagger.json
+          swagger2openapi --outfile docs/openapi.json docs/swagger.json
 
       - name: Checkout swagger-ui
         uses: actions/checkout@v3
