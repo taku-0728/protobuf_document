@@ -25,13 +25,12 @@ jobs:
       - name: Install swagger-cli
         run: |
           npm install -g swagger-cli@3.0.0
-          cp docs/index.html node_modules/swagger-ui/dist/* doc
 
       - name: Generate Swagger UI
         uses: Legion2/swagger-ui-action@v1
         with:
           output: swagger-ui
-          spec-file: docs/swagger.json
+          spec-file: ./docs/swagger.json
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
 
