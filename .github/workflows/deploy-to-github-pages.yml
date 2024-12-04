@@ -32,7 +32,7 @@ jobs:
         uses: Legion2/swagger-ui-action@v1
         with:
           output: swagger-ui
-          spec-file: docs/hello.swagger.json
+          spec-file: docs/api/v1/hello.swagger.json
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
 
