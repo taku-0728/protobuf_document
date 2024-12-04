@@ -6,8 +6,6 @@ on:
       - master
     types:
       - opened
-      - synchronize
-      - closed
 
 jobs:
   deploy-to-github-pages:
@@ -29,14 +27,11 @@ jobs:
           ref: 'v4.15.0'
           path: swagger-ui
 
-      - name: Inject Swagger static files
-        run: cp -n swagger-ui/dist/* docs
-
       - name: Generate Swagger UI
         uses: Legion2/swagger-ui-action@v1
         with:
           output: swagger-ui
-          spec-file: docs/swagger.json
+          spec-file: docs/hello.swagger.json
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
 
