@@ -7,33 +7,40 @@ on:
     types:
       - opened
       - synchronize
-      - closed
-    paths:
-      - openapi.yml
-      - .github/workflows/deploy-to-github-pages.yml
-
+      
 jobs:
   deploy-to-github-pages:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - name: Install swagger-cli
-        run: |
-          npm install -g swagger-cli
+      - name: Install buf CLI
+        uses: bufbuild/buf-setup-action@v1
 
-      - name: Validate Swagger Files
+      - name: Generate Swagger JSON
         run: |
-          swagger-cli validate -d openapi.yaml --type yaml
+          buf generate --template buf.gen.doc.yaml
+
+      - name: Checkout swagger-ui
+        uses: actions/checkout@v3
+        with:
+          repository: swagger-api/swagger-ui
+          ref: 'v4.15.0'
+          path: swagger-ui
+
+      - name: Inject Swagger static files
+        run: cp -n swagger-ui/dist/* docs
 
       - name: Generate Swagger UI
         uses: Legion2/swagger-ui-action@v1
         with:
           output: swagger-ui
-          spec-file: openapi.yaml
+          spec-file: docs/api/v1/hello.swagger.json
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Deploy to GitHub Pages
+
+      - name: Push gh-pages branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: swagger-ui
+          publish_dir: ./docs
